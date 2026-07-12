@@ -469,6 +469,61 @@
           }
         }
       }
+    },
+    "/api/orders": {
+      "get": {
+        "summary": "Отримати всі замовлення",
+        "description": "Повертає список усіх замовлень з бази даних.",
+        "responses": {
+          "200": {
+            "description": "Успішна відповідь",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Створити нове замовлення",
+        "description": "Створює нове замовлення з вказаними полями (ім'я, телефон, адреса, повідомлення, назва букета, кількість, загальна ціна).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderCreate"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Замовлення успішно створено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Помилка валідації вхідних даних"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -616,6 +671,92 @@
           "text": {
             "type": "string",
             "example": "Flora made my anniversary unforgettable!"
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Ann"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+1 (555) 123-4567"
+          },
+          "address": {
+            "type": "string",
+            "nullable": true,
+            "example": "456 Floral Ave, Sydney NSW 2000 AU"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true,
+            "example": "Please deliver before 5 PM"
+          },
+          "bouquetTitle": {
+            "type": "string",
+            "nullable": true,
+            "example": "Spring Elegance"
+          },
+          "quantity": {
+            "type": "integer",
+            "example": 2
+          },
+          "totalPrice": {
+            "type": "number",
+            "nullable": true,
+            "example": 70
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "OrderCreate": {
+        "type": "object",
+        "required": [
+          "name",
+          "phone"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ann"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+1 (555) 123-4567"
+          },
+          "address": {
+            "type": "string",
+            "example": "456 Floral Ave, Sydney NSW 2000 AU"
+          },
+          "message": {
+            "type": "string",
+            "example": "Please deliver before 5 PM"
+          },
+          "bouquetTitle": {
+            "type": "string",
+            "example": "Spring Elegance"
+          },
+          "quantity": {
+            "type": "integer",
+            "example": 1
+          },
+          "totalPrice": {
+            "type": "number",
+            "example": 35
           }
         }
       }
