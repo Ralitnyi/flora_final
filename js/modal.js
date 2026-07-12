@@ -1,3 +1,5 @@
+import { apiClient } from "./apiClient.js";
+
 const detailModal = document.getElementById('detail-modal');
 const orderModal = document.getElementById('order-modal');
 
@@ -13,6 +15,8 @@ if (detailModal && orderModal) {
   const orderCloseBtn = orderModal.querySelector('[data-modal-close]');
   const orderForm = orderModal.querySelector('.order-form');
 
+  let currentBouquetData = null;
+
   function updateScrollLock() {
     const isAnyModalOpen = detailModal.classList.contains('is-open') || orderModal.classList.contains('is-open');
     if (isAnyModalOpen) {
@@ -23,6 +27,7 @@ if (detailModal && orderModal) {
   }
 
   function openDetailModal(productData) {
+    currentBouquetData = productData;
     if (modalTitle) modalTitle.textContent = productData.title;
     if (modalPrice) modalPrice.textContent = productData.price;
     if (modalDescription) modalDescription.textContent = productData.description;
@@ -90,16 +95,55 @@ if (detailModal && orderModal) {
   }
 
   if (orderForm) {
-    orderForm.addEventListener('submit', (e) => {
+    orderForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       const nameInput = orderForm.querySelector('.order-form-inputName');
+      const phoneInput = orderForm.querySelector('.order-form-inputPhone');
+      const addressInput = orderForm.querySelector('.order-form-inputAddress');
+      const messageInput = orderForm.querySelector('.order-form-textarea');
+      
       const name = nameInput ? nameInput.value.trim() : '';
+      const phone = phoneInput ? phoneInput.value.trim() : '';
+      const address = addressInput ? addressInput.value.trim() : '';
+      const message = messageInput ? messageInput.value.trim() : '';
       
-      alert(`Thank you for your order, ${name}! Our manager will contact you shortly to confirm.`);
+      const quantity = quantityInput ? parseInt(quantityInput.value, 10) || 1 : 1;
+      const priceStr = currentBouquetData?.price?.replace('$', '') || '0';
+      const totalPrice = parseFloat(priceStr) * quantity;
       
-      orderForm.reset();
-      closeAllModals();
+      const orderData = {
+        name,
+        phone,
+        address: address || null,
+        message: message || null,
+        bouquetTitle: currentBouquetData?.title || null,
+        quantity,
+        totalPrice: totalPrice || null,
+      };
+      
+      const submitBtn = orderForm.querySelector('.order-submit-btn');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+      }
+      
+      try {
+        await apiClient.post('/orders', orderData);
+        
+        alert(`Thank you for your order, ${name}! Our manager will contact you shortly to confirm.`);
+        
+        orderForm.reset();
+        closeAllModals();
+      } catch (error) {
+        console.error('Order submission failed:', error);
+        alert('Sorry, something went wrong. Please try again later.');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Go to Checkout';
+        }
+      }
     });
   }
 

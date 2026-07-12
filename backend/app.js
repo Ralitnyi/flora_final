@@ -5,6 +5,7 @@ import fs from "fs";
 import swaggerUi from "swagger-ui-express";
 import bouquetsRouter from "./routes/api/bouquets.js";
 import feedbacksRouter from "./routes/api/feedbacks.js";
+import ordersRouter from "./routes/api/orders.js";
 
 const app = express();
 
@@ -23,6 +24,9 @@ app.use("/bouquets", bouquetsRouter);
 
 app.use("/api/feedbacks", feedbacksRouter);
 app.use("/feedbacks", feedbacksRouter);
+
+app.use("/api/orders", ordersRouter);
+app.use("/orders", ordersRouter);
 
 const getDbData = async () => {
   const dbJsonPath = path.resolve("..", "db.json");
