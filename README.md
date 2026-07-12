@@ -4,10 +4,10 @@ Flora — це full-stack веб-застосунок для перегляду 
 
 ## Посилання на розгорнутий проєкт
 
-- **Frontend (GitHub Pages):** https://[GITHUB_USERNAME].github.io/flora_final/
-- **Backend API (Render):** https://flora-backend-ordu.onrender.com
-- **Swagger UI (документація API):** https://flora-backend-ordu.onrender.com/api-docs
-- **Репозиторій GitHub:** https://github.com/[GITHUB_USERNAME]/flora_final
+- **Frontend (GitHub Pages):** https://ralitnyi.github.io/flora_final/
+- **Backend API (Render):** https://flora-backend-g2z3.onrender.com/
+- **Swagger UI (документація API):** https://flora-backend-g2z3.onrender.com/api-docs
+- **Репозиторій GitHub:** https://github.com/Ralitnyi/flora_final
 
 
 ---
@@ -77,6 +77,6 @@ npm run dev
 ## Інтерактивна документація (Swagger UI)
 При запущеному сервері перейдіть за адресою:
 - Локально: http://localhost:3001/api-docs
-- Продакшен: https://flora-backend-ordu.onrender.com/api-docs
+- Продакшен: https://flora-backend-g2z3.onrender.com/api-docs
 
 Тут можна протестувати всі API запити (створення букетів, зміна статусу favorite, видалення, завантаження фото) безпосередньо з браузера.

@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://flora-backend-ordu.onrender.com",
+      "url": "https://flora-backend-g2z3.onrender.com",
       "description": "Production Server (Render)"
     },
     {
